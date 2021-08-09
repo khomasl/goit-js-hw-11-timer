@@ -1,0 +1,36 @@
+{
+  "name": "goit-js-hw-11-timer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/js/app.js",
+    "dev": "parcel src/*.html",
+    "build": "parcel build src/*.html --public-url /goit-js-hw-11-timer/",
+    "deploy": "gh-pages -d dist",
+    "predeploy": "npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/khomasl/goit-js-hw-11-timer.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/khomasl/goit-js-hw-11-timer/issues"
+  },
+  "homepage": "https://khomasl.github.io/goit-js-hw-11-timer",
+  "devDependencies": {
+    "handlebars-loader": "^1.7.1",
+    "parcel-bundler": "^1.12.5",
+    "parcel-plugin-handlebars-precompile": "^1.0.2",
+    "parcel-plugin-nuke-dist": "^1.0.1",
+    "posthtml-include": "^1.7.1"
+  },
+  "dependencies": {
+    "gh-pages": "^3.2.3",
+    "handlebars": "^4.7.7"
+  }
+}
