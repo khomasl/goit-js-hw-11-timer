@@ -15,6 +15,7 @@
     "type": "git",
     "url": "git+https://github.com/khomasl/goit-js-hw-11-timer.git"
   },
+  "plugins": ["CountdownTimer"],
   "keywords": [],
   "author": "",
   "license": "ISC",
