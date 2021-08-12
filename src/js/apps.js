@@ -25,6 +25,15 @@
 //          targetDate = new Date('Sep 17, 2021');
 //        }
 let idInterval = null;
+let startDate = null;
+let time = null;
+
+
+function timerStop () {
+    clearInterval(idInterval);
+}
+
+
 
 function timerStart () {
     const timerDiv = document.querySelector('#timer-1');
@@ -41,39 +50,56 @@ function timerStart () {
     //console.log('daysValue :>> ', labelDay);
     //function getTime () {
         //time = time - 1000;
-    const time = new Date('Aug 11, 2021 07:50') - Date.now();
+    startDate = new Date('Aug 12, 2021 07:50');    
+    time = startDate - Date.now();
 
     if (time <= 0) {
-        clearInterval(idInterval)
+        timerStop();
         return;
     };
 
-    const days = Math.floor(time / (1000 * 60 * 60 * 24));
+    setTimerData();
 
-    const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    
-    const mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-    
-    const secs = Math.floor((time % (1000 * 60)) / 1000);
+    /////////////////////////////
+    function setTimerData () {
+        const days = Math.floor(time / (1000 * 60 * 60 * 24));
 
-    //if (days + hours + mins + secs === 0) {clearInterval(idInterval)};
-    
-    //}; 
+        const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        
+        const mins = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
+        
+        const secs = Math.floor((time % (1000 * 60)) / 1000);
 
-    daysValue.textContent  = days  > 9 ? days  : `0${days}`;
-    hoursValue.textContent = hours > 9 ? hours : `0${hours}`;
-    minsValue.textContent  = mins  > 9 ? mins  : `0${mins}`;
-    secsValue.textContent  = secs  > 9 ? secs  : `0${secs}`;
+        //if (days + hours + mins + secs === 0) {clearInterval(idInterval)};
 
-    labelDay.textContent  = days  === 1 ? 'Day' : 'Days'; ; 
-    labelHour.textContent = hours === 1 ? 'Hour' : 'Hours'; 
-    labelMin.textContent  = mins  === 1 ? 'Minute' : 'Minutes';
-    labelSec.textContent  = secs  === 1 ? 'Second' : 'Seconds'; 
+        daysValue.textContent  = days  > 9 ? days  : `0${days}`;
+        hoursValue.textContent = hours > 9 ? hours : `0${hours}`;
+        minsValue.textContent  = mins  > 9 ? mins  : `0${mins}`;
+        secsValue.textContent  = secs  > 9 ? secs  : `0${secs}`;
+
+        labelDay.textContent  = days  === 1 ? 'Day' : 'Days'; ; 
+        labelHour.textContent = hours === 1 ? 'Hour' : 'Hours'; 
+        labelMin.textContent  = mins  === 1 ? 'Minute' : 'Minutes';
+        labelSec.textContent  = secs  === 1 ? 'Second' : 'Seconds'; 
+
+    }
+
+};
+
+// const timer = new CountdownTimer({
+//     selector: '#timer-1',
+//     targetDate: new Date('Sep 17, 2021'),
+//   });
+
+window.addEventListener('DOMContentLoaded', timerStart);
+
+idInterval = setInterval(timerStart, 1000);
 
 ////////////////////////////////////////////////////////////////////////    
 // розмітка через шаблонний рядок
 
-    // const daysM= days  > 9 ? days  : `0${days}`;
+// function makeMarkup () {
+     // const daysM= days  > 9 ? days  : `0${days}`;
     // const hoursM= hours > 9 ? hours : `0${hours}`;
     // const minsM= mins  > 9 ? mins  : `0${mins}`;
     // const secsM= secs  > 9 ? secs  : `0${secs}`;
@@ -106,14 +132,5 @@ function timerStart () {
 //   `;
 
 //   timerDiv.innerHTML = markup;
+ //}   
 ////////////////////////////////////////////////////////////////////////////////
-};
-
-// const timer = new CountdownTimer({
-//     selector: '#timer-1',
-//     targetDate: new Date('Sep 17, 2021'),
-//   });
-
-window.addEventListener('DOMContentLoaded', timerStart);
-
-idInterval = setInterval(timerStart, 1000);
