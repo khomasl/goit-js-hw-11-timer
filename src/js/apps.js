@@ -1,20 +1,11 @@
 class CountdownTimer {
-    constructor({selector = '#timer-1', targetDate = new Date('Aug 15, 2025 13:57')}) {
+    constructor({selector = '#timer-1', targetDate = new Date('Aug 15, 2025 13:57'), timerSetData}) {
         this.selector = selector;
         this.targetDate = targetDate;
+        this.timerSetData = timerSetData;
+
         this.idInterval = null;
         this.time = null;
-
-        this.timerDiv   = document.querySelector(this.selector);
-        this.daysValue  = document.querySelector('span[data-value="days"]');
-        this.hoursValue = document.querySelector('span[data-value="hours"]');
-        this.minsValue  = document.querySelector('span[data-value="mins"]');
-        this.secsValue  = document.querySelector('span[data-value="secs"]');
-
-        this.labelDay  = document.querySelector('.label__day');
-        this.labelHour = document.querySelector('.label__hour');
-        this.labelMin  = document.querySelector('.label__min');
-        this.labelSec  = document.querySelector('.label__sec');
     }
 
     pad = (value) => {
@@ -31,19 +22,54 @@ class CountdownTimer {
         return {days, hours, mins, secs};
     }
 
-    timerSetData = () => {
-        const {days, hours, mins, secs} = this.getTimeComponents();
-
-        this.daysValue.textContent  = days;
-        this.hoursValue.textContent = hours;
-        this.minsValue.textContent  = mins;
-        this.secsValue.textContent  = secs;
-
-        this.labelDay.textContent  = days  === '01' ? 'Day' : 'Days'; ; 
-        this.labelHour.textContent = hours === '01' ? 'Hour' : 'Hours'; 
-        this.labelMin.textContent  = mins  === '01' ? 'Minute' : 'Minutes';
-        this.labelSec.textContent  = secs  === '01' ? 'Second' : 'Seconds'; 
+    timerStop = () => {
+        clearInterval(this.idInterval);
     }
+
+    timerStart = () => {
+        this.time = this.targetDate - Date.now();
+
+        if (this.time <= 0) {
+            this.timerStop;
+            return;
+        };
+
+        const time = this.getTimeComponents();
+        this.timerSetData(time);
+        //this.timerMakeMarkup();
+    };
+
+    timerInit = () => {
+        this.idInterval = setInterval(this.timerStart, 1000);
+    }
+}
+const targetDate = new Date('Aug 20, 2021 12:57');
+const timer = new CountdownTimer({selector: '#timer-1', targetDate: targetDate, timerSetData});
+
+window.addEventListener('DOMContentLoaded', timer.timerInit);
+
+function timerSetData ({days, hours, mins, secs}) {
+    //const timerDiv   = document.querySelector(this.selector);
+    const daysValue  = document.querySelector('span[data-value="days"]');
+    const hoursValue = document.querySelector('span[data-value="hours"]');
+    const minsValue  = document.querySelector('span[data-value="mins"]');
+    const secsValue  = document.querySelector('span[data-value="secs"]');
+
+    const labelDay  = document.querySelector('.label__day');
+    const labelHour = document.querySelector('.label__hour');
+    const labelMin  = document.querySelector('.label__min');
+    const labelSec  = document.querySelector('.label__sec');
+
+    daysValue.textContent  = days;
+    hoursValue.textContent = hours;
+    minsValue.textContent  = mins;
+    secsValue.textContent  = secs;
+
+    labelDay.textContent  = days  === '01' ? 'Day' : 'Days'; ; 
+    labelHour.textContent = hours === '01' ? 'Hour' : 'Hours'; 
+    labelMin.textContent  = mins  === '01' ? 'Minute' : 'Minutes';
+    labelSec.textContent  = secs  === '01' ? 'Second' : 'Seconds'; 
+}
 
 // розмітка через шаблонний рядок
     // timerMakeMarkup = () => {
@@ -89,28 +115,3 @@ class CountdownTimer {
 
     //     timerDiv.innerHTML = markup;
     // }   
-
-    timerStop = () => {
-        clearInterval(this.idInterval);
-    }
-
-    timerStart = () => {
-        this.time = this.targetDate - Date.now();
-
-        if (this.time <= 0) {
-            this.timerStop;
-            return;
-        };
-
-        this.timerSetData();
-        //this.timerMakeMarkup();
-    };
-
-    timerInit = () => {
-        this.idInterval = setInterval(this.timerStart, 1000);
-    }
-}
-const targetDate = new Date('Aug 20, 2021 12:57');
-const timer = new CountdownTimer({selector: '#timer-1', targetDate: targetDate});
-
-window.addEventListener('DOMContentLoaded', timer.timerInit);
